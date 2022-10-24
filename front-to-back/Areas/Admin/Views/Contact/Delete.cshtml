@@ -1,5 +1,5 @@
 ﻿@using front_to_back.Models
-@model RecentWorkComponent
+@model ContactIntroComponent
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
@@ -8,21 +8,20 @@
                 <div class="card-body">
                   
                   <p class="card-description">
-                    Details Work
+                    Delete work component
                   </p>
 
                   <span>@Model.Title</span>
 
                   <br>
-                  <span>@Model.Text</span>
+                  <span>@Model.Description</span>
                   <br>
                   <span>@Model.FilePath</span>
                  
-                  <form method="post" asp-action="index" asp-controller="recentwork" asp-area="admin" asp-route-id="@Model.Id">
-                      <button class="btn btn-danger">
-                          Previuos
+                  <form method="post" asp-action="deletecomponent" asp-controller="contact" asp-area="admin" asp-route-id="@Model.Id">
+                      <button onclick="confirm('Are you sure')" class="btn btn-danger">
+                          Yes
                       </button>
-
                   </form>
 
                 </div>

@@ -8,26 +8,23 @@
                 <div class="card-body">
                   
                   <p class="card-description">
-                    Details contact intro
+                    Details Work
                   </p>
-                  
-                   <span>TITLE:</span>
-                   <span>@Model.Title</span>
 
-                   <br/>
-                       <br/>
+                  <span>@Model.Title</span>
 
-                  <span>Description:</span>
-                   <span>@Model.Description</span>
-                    <br/>
-                            <br/>
-                   
-                    <span>Photo:</span>
-                  <td> <img style="width: 100px" src="~/assets/img/@Model.FilePath"></td>
+                  <br>
+                  <span>@Model.Description</span>
+                  <br>
+                  <span>@Model.FilePath</span>
+                 
+                  <form method="post" asp-action="index" asp-controller="contact" asp-area="admin" asp-route-id="@Model.Id">
+                      <button class="btn btn-danger">
+                          Previuos
+                      </button>
 
-                   <form method="post" asp-action="deletecomponent" asp-controller="contact" asp-area="admin" asp-route-id="@Model.Id">
-                      <a class="btn btn-primary" asp-action="index" asp-controller="contact" asp-area="admin"> Cancel</a>
-                   </form>
+                  </form>
+
                 </div>
               </div>
             </div>

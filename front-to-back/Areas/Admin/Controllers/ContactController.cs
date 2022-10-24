@@ -74,5 +74,68 @@ namespace front_to_back.Areas.Admin.Controllers
             return View(contactBanner);
 
         }
+
+        [HttpGet]
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var contactIntroComponent = await _appDbContext.ContactIntroComponent.FindAsync(id);
+
+            if (contactIntroComponent == null) return NotFound();
+            return View(contactIntroComponent);
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> DeleteComponent(int id)
+        {
+            var dbcontactIntro = await _appDbContext.ContactIntroComponent.FindAsync(id);
+            if (dbcontactIntro == null) return NotFound();
+
+
+            _appDbContext.Remove(dbcontactIntro);
+            await _appDbContext.SaveChangesAsync();
+
+            return RedirectToAction("index");
+        }
+
+        [HttpGet]
+
+        public async Task<IActionResult> Update(int id)
+        {
+            var contactIntroComponent = await _appDbContext.ContactIntroComponent.FindAsync(id);
+
+            if (contactIntroComponent == null) return NotFound();
+            return View(contactIntroComponent);
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> Update(int id, ContactIntroComponent contactIntroComponent)
+        {
+            if (!ModelState.IsValid) return View(contactIntroComponent);
+            if (id != contactIntroComponent.Id) return BadRequest();
+            var dbcontactIntroComponent = await _appDbContext.ContactIntroComponent.FindAsync(id);
+            if (dbcontactIntroComponent == null) return NotFound();
+
+
+            bool isExist = await _appDbContext.ContactIntroComponent
+                                                   .AnyAsync(c => c.Title.ToLower().Trim() == contactIntroComponent.Title.
+                                                   ToLower().Trim()
+                                                   && c.Id != contactIntroComponent.Id);
+
+            if (isExist)
+            {
+                ModelState.AddModelError("Title", "Bu adda title artıq mövcuddur");
+
+                return View(contactIntroComponent);
+            }
+
+            dbcontactIntroComponent.Title = contactIntroComponent.Title;
+            dbcontactIntroComponent.Description = contactIntroComponent.Description;
+            dbcontactIntroComponent.FilePath = contactIntroComponent.FilePath;
+            await _appDbContext.SaveChangesAsync();
+
+            return RedirectToAction("index");
+        }
+
     }
 }
