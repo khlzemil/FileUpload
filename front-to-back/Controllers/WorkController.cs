@@ -19,9 +19,13 @@ namespace front_to_back.Controllers
                                                     .Include(c => c.CategoryComponents)
                                                     .ToListAsync();
 
+
             var model = new WorkIndexViewModel
             {
-                Categories = categories
+                Categories = categories,
+                FeaturedWorkComponent = await _appDbContext.FeaturedWorkComponent.
+                Include(fwc => fwc.FeaturedWorkComponentPhotos.OrderBy(fwcp => fwcp.Order))
+                .FirstOrDefaultAsync()
             };
 
             return View(model);
